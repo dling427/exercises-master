@@ -1,0 +1,22 @@
+import agate
+arrests = agate.Table.from_csv('arrest.csv')
+
+print arrests
+
+
+
+
+
+
+
+
+
+
+
+
+
+charges = arrests.group_by('Charge Descrip')
+charge_counts = charges.aggregate([('charge_total', agate.Count('Charge Descrip'))])
+charge_counts = charge_counts.order_by('charge_total', reverse=True)
+
+charge_counts.print_table(max_column_width=50)
